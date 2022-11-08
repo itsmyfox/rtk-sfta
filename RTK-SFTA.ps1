@@ -590,7 +590,7 @@ function Get-FTA {
         }
   
        function Analyze2( $p, $f) {
-           Get-ItemProperty $p |foreach {
+           Get-ItemProperty $p |ForEach-Object {
               if ($_.DisplayName -like "*PDF24*") {
                    [PSCustomObject]@{ 
                            Name = $_.DisplayName -like "*PDF24*";
@@ -645,26 +645,50 @@ $http = "http"
 if ($htmYandex -eq $calcTrue) {
 	Write-Host "The .htm file has edge by default. Change to Yandex."
 	$changeYandexHtm = Set-FTA 'YandexHTML' '.htm'
-} elseif ($htmlYandex -eq $calcTrue) {
+} else {
+	Write-Host "No action required. $changeYandexHtm"
+}
+
+if ($htmlYandex -eq $calcTrue) {
 	Write-Host "The .html file has edge by default. Change to Yandex."
 	$changeYandexHtml = Set-FTA 'YandexHTML' '.html'
-} elseif ($xhtmlYandex -eq $calcTrue) {
+} else {
+	Write-Host "No action required. $changeYandexHtml"
+}
+
+if ($xhtmlYandex -eq $calcTrue) {
 	Write-Host "The .xhtml file has edge by default. Change to Yandex."
 	$changeYandexXhtml = Set-FTA 'YandexHTML' '.xhtml'
-} elseif ($urlYandex -eq $calcTrue) {
+} else {
+	Write-Host "No action required. $changeYandexXhtml"
+}
+
+if ($urlYandex -eq $calcTrue) {
 	Write-Host "The .url file has edge by default. Change to Yandex."
 	$changeYandexUrl = Set-FTA 'YandexHTML' '.url'
-} elseif ($httpYYandex -eq $http) {
+} else {
+	Write-Host "No action required. $changeYandexUrl"
+}
+
+if ($httpYYandex -eq $http) {
 	Write-Host "The http format has edge by default. Change to Yandex."
 	$changeYandexHttp = Set-PTA 'YandexHTML' 'http'
-} elseif ($httpYandex -eq $calcTrue) {
+} else {
+	Write-Host "No action required. $changeYandexHttp"
+}
+
+if ($httpYandex -eq $calcTrue) {
 	Write-Host "The http format has edge by default. Change to Yandex."
 	$changeYandexHttp2 = Set-PTA 'YandexHTML' 'http'
-} elseif ($httpsYandex -eq $calcTrue) {
+} else {
+	Write-Host "No action required. $changeYandexHttp2"
+}
+
+if ($httpsYandex -eq $calcTrue) {
 	Write-Host "The https format has edge by default. Change to Yandex."
 	$changeYandexHttps = Set-PTA 'YandexHTML' 'https'
 } else {
-	Write-Host "No action required."
+	Write-Host "No action required. $changeYandexHttps"
 }
 
   Write-Host "Complete"
