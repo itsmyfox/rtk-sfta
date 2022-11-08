@@ -639,56 +639,56 @@ $urlYandex = Get-FTA .url
 $httpYYandex = Get-PTA http
 $httpYandex = Get-PTA http
 $httpsYandex = Get-PTA https
-$calcTrue = "True"
+$calcTrue = "true"
 $http = "http"
 
 if ($htmYandex -eq $calcTrue) {
 	Write-Host "The .htm file has edge by default. Change to Yandex."
 	$changeYandexHtm = Set-FTA 'YandexHTML' '.htm'
 } else {
-	Write-Host "No action required. $changeYandexHtm"
+	Write-Host "No action required. $htmYandex"
 }
 
 if ($htmlYandex -eq $calcTrue) {
 	Write-Host "The .html file has edge by default. Change to Yandex."
 	$changeYandexHtml = Set-FTA 'YandexHTML' '.html'
 } else {
-	Write-Host "No action required. $changeYandexHtml"
+	Write-Host "No action required. $htmlYandex"
 }
 
 if ($xhtmlYandex -eq $calcTrue) {
 	Write-Host "The .xhtml file has edge by default. Change to Yandex."
 	$changeYandexXhtml = Set-FTA 'YandexHTML' '.xhtml'
 } else {
-	Write-Host "No action required. $changeYandexXhtml"
+	Write-Host "No action required. $xhtmlYandex"
 }
 
 if ($urlYandex -eq $calcTrue) {
 	Write-Host "The .url file has edge by default. Change to Yandex."
 	$changeYandexUrl = Set-FTA 'YandexHTML' '.url'
 } else {
-	Write-Host "No action required. $changeYandexUrl"
+	Write-Host "No action required. $urlYandex"
 }
 
 if ($httpYYandex -eq $http) {
 	Write-Host "The http format has edge by default. Change to Yandex."
 	$changeYandexHttp = Set-PTA 'YandexHTML' 'http'
 } else {
-	Write-Host "No action required. $changeYandexHttp"
+	Write-Host "No action required. $httpYYandex"
 }
 
 if ($httpYandex -eq $calcTrue) {
 	Write-Host "The http format has edge by default. Change to Yandex."
 	$changeYandexHttp2 = Set-PTA 'YandexHTML' 'http'
 } else {
-	Write-Host "No action required. $changeYandexHttp2"
+	Write-Host "No action required. $httpYandex"
 }
 
 if ($httpsYandex -eq $calcTrue) {
 	Write-Host "The https format has edge by default. Change to Yandex."
 	$changeYandexHttps = Set-PTA 'YandexHTML' 'https'
 } else {
-	Write-Host "No action required. $changeYandexHttps"
+	Write-Host "No action required. $httpsYandex"
 }
 
   Write-Host "Complete"
