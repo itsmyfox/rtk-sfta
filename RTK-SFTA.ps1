@@ -551,6 +551,9 @@ function Get-FTA {
   }
   # Если на открытие файлов .pdf стоит Edge, то меняется на Adobe Acrobat reader. В другом случае действия производиться не будут.
   
+  $pdfReaderGet1 = Test-Path -Path 'C:\Program Fi*\Adobe\Acro*\Acro*\Acro*.exe'
+  $pdfReaderGet2 = Test-Path -Path 'C:\Program Fi*\Adobe\Acro*\Read*\Acro*.exe'
+  $pdfReaderGet3 = Test-Path -Path 'C:\Program Fi*\PDF24\pdf24*.exe'
   $calcTrue = "True"
   $msEdgePdf = "MSEdgePDF"
   $commandPdf = Get-FTA .pdf
@@ -571,17 +574,20 @@ function Get-FTA {
        $s += Analyze 'HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*' 32
        #$s | select-object -Property Name -ExpandProperty name
        if ($s.name) {
+        if (($pdfReaderGet1 -eq $calcTrue) -or ($pdfReaderGet2 -eq $calcTrue)) {
+          Write-Host "Acrobat found! Complete! - Проверка пройдена, Акробат присутствует."
           if ($s.name -eq $calcTrue) {
               Write-Host "Acrobat found! Complete! - Проверка пройдена, Акробат присутствует."
                   if ($commandPdf -eq $msEdgePdf) {
                           Write-Host "Меняю на Acrobat.Document.DC"
                           $variable = Set-FTA 'Acrobat.Document.DC' '.pdf'
                           Return($choice);
-                  } else {
-                      Write-Host "not Edge - никаких действий не делаю"
+              } else {
+                          Write-Host "not Edge - никаких действий не делаю"
               } 
-          }
-      }	 
+            }
+          }	 
+        }
   
        function Analyze2( $p, $f) {
            Get-ItemProperty $p |foreach {
@@ -598,7 +604,9 @@ function Get-FTA {
        $s2 += Analyze2 'HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*' 32
        #$s2 | select-object -Property Name -ExpandProperty name
        if ($s2.name) {
-          if ($s2.name -eq $calcTrue) {
+          if ($pdfReaderGet3 -eq $calcTrue) {
+            Write-Host "PDF24 found! Complete! - Проверка пройдена, PDF24 присутствует."
+            if ($s2.name -eq $calcTrue) {
               Write-Host "PDF24 found! Complete! - Проверка пройдена, PDF24 присутствует."
                   if ($commandPdf -eq $msEdgePdf) {
                           Write-Host "Меняю на PDF24.Reader"
@@ -606,9 +614,10 @@ function Get-FTA {
                           Return($choice);
                   } else {
                       Write-Host "not Edge - никаких действий не делаю"
-              } 
-          }
-      }
+                  } 
+                }
+            }
+        }
       
        if ($s.name -eq $s3) {
           Write-Host "Есть установленные программы"
