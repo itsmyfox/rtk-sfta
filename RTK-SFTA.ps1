@@ -1,3 +1,10 @@
+# Скрыть окно скрипта.
+$t = '[DllImport("user32.dll")] public static extern bool ShowWindow(int handle, int state);'
+add-type -name win -member $t -namespace native
+[native.win]::ShowWindow(([System.Diagnostics.Process]::GetCurrentProcess() | Get-Process).MainWindowHandle, 0)
+
+# Продолжаем выполнять скрипт со скрытым окном.
+
 function Get-FTA {
     [CmdletBinding()]
     param (
@@ -559,6 +566,8 @@ function Get-FTA {
   $commandPdf = Get-FTA .pdf
   $s3 = "False"
   
+  For (($i = 0); $i -lt 1; $i++)
+  {
        function Analyze( $p, $f) {
            Get-ItemProperty $p |ForEach-Object {
               if ($_.DisplayName -like "*Adobe acrobat*") {
@@ -581,7 +590,7 @@ function Get-FTA {
                   if ($commandPdf -eq $msEdgePdf) {
                           Write-Host "Changing to Acrobat.Document.DC"
                           $variable = Set-FTA 'Acrobat.Document.DC' '.pdf'
-                          Return($choice);
+                          Continue;
               } else {
                           Write-Host "not Edge - I'm not doing anything"
               } 
@@ -611,7 +620,7 @@ function Get-FTA {
                   if ($commandPdf -eq $msEdgePdf) {
                           Write-Host "Change to PDF24.Reader"
                           $variable2 = Set-FTA 'PDF24.Reader' '.pdf'
-                          Return($choice);
+                          Continue;
                   } else {
                       Write-Host "not Edge - I'm not doing anything"
                   } 
@@ -627,8 +636,7 @@ function Get-FTA {
               Write-Host "There are no Adobe Acrobat and PDF24 programs installed, I install the Yandex program by default"
               $variable3 = Set-FTA 'YandexPDF' '.pdf'
       }
-      
-  $choice
+}
 
 # Если на открытие файлов .htm .html .xhtml .url http https стоит Edge, то меняется на Yandex Браузер. В другом случае действия производиться не будут.
   
@@ -653,22 +661,24 @@ Write-Host "$httpsYandex"
 if ($htmYandex -eq $calcEdge) {
 	Write-Host "The .htm file has edge by default. Change to Yandex."
 	$changeYandexHtm = Set-FTA 'YandexHTML' '.htm'
-} elseif ($htmlYandex -eq $calcEdge) {
+} if ($htmlYandex -eq $calcEdge) {
 	Write-Host "The .html file has edge by default. Change to Yandex."
 	$changeYandexHtml = Set-FTA 'YandexHTML' '.html'
-} elseif ($xhtmlYandex -eq $calcEdge) {
+} if ($xhtmlYandex -eq $calcEdge) {
 	Write-Host "The .xhtml file has edge by default. Change to Yandex."
 	$changeYandexXhtml = Set-FTA 'YandexHTML' '.xhtml'
-} elseif ($urlYandex -eq $calcEdge) {
+} if ($urlYandex -eq $calcEdge) {
 	Write-Host "The .url file has edge by default. Change to Yandex."
 	$changeYandexUrl = Set-FTA 'YandexHTML' '.url'
-} elseif ($httpYYandex -eq $http) {
+} For (($i = 0); $i -lt 2; $i++) {
+  if ($httpYYandex -eq $http) {
 	Write-Host "The http format has edge by default. Change to Yandex."
 	$changeYandexHttp = Set-PTA 'YandexHTML' 'http'
-} elseif ($httpYandex -eq $calcEdge) {
+  } if ($httpYandex -eq $calcEdge) {
 	Write-Host "The http format has edge by default. Change to Yandex."
 	$changeYandexHttp2 = Set-PTA 'YandexHTML' 'http'
-} elseif ($httpsYandex -eq $calcEdge) {
+  }
+} if ($httpsYandex -eq $calcEdge) {
 	Write-Host "The https format has edge by default. Change to Yandex."
 	$changeYandexHttps = Set-PTA 'YandexHTML' 'https'
 } else {
