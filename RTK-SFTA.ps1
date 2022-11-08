@@ -560,7 +560,7 @@ function Get-FTA {
   $s3 = "False"
   
        function Analyze( $p, $f) {
-           Get-ItemProperty $p |foreach {
+           Get-ItemProperty $p |ForEach-Object {
               if ($_.DisplayName -like "*Adobe acrobat*") {
                    [PSCustomObject]@{ 
                            Name = $_.DisplayName -like "*Adobe acrobat*";
@@ -575,15 +575,15 @@ function Get-FTA {
        #$s | select-object -Property Name -ExpandProperty name
        if ($s.name) {
         if (($pdfReaderGet1 -eq $calcTrue) -or ($pdfReaderGet2 -eq $calcTrue)) {
-          Write-Host "Acrobat found! Complete! - Проверка пройдена, Акробат присутствует."
+          Write-Host "Acrobat found! Complete! - Test passed, Acrobat present."
           if ($s.name -eq $calcTrue) {
-              Write-Host "Acrobat found! Complete! - Проверка пройдена, Акробат присутствует."
+              Write-Host "Acrobat found! Complete! - Test passed, Acrobat present."
                   if ($commandPdf -eq $msEdgePdf) {
-                          Write-Host "Меняю на Acrobat.Document.DC"
+                          Write-Host "Changing to Acrobat.Document.DC"
                           $variable = Set-FTA 'Acrobat.Document.DC' '.pdf'
                           Return($choice);
               } else {
-                          Write-Host "not Edge - никаких действий не делаю"
+                          Write-Host "not Edge - I'm not doing anything"
               } 
             }
           }	 
@@ -605,120 +605,69 @@ function Get-FTA {
        #$s2 | select-object -Property Name -ExpandProperty name
        if ($s2.name) {
           if ($pdfReaderGet3 -eq $calcTrue) {
-            Write-Host "PDF24 found! Complete! - Проверка пройдена, PDF24 присутствует."
+            Write-Host "PDF24 found! Complete! - Verification passed, PDF24 present."
             if ($s2.name -eq $calcTrue) {
-              Write-Host "PDF24 found! Complete! - Проверка пройдена, PDF24 присутствует."
+              Write-Host "PDF24 found! Complete! - Verification passed, PDF24 present."
                   if ($commandPdf -eq $msEdgePdf) {
-                          Write-Host "Меняю на PDF24.Reader"
+                          Write-Host "Change to PDF24.Reader"
                           $variable2 = Set-FTA 'PDF24.Reader' '.pdf'
                           Return($choice);
                   } else {
-                      Write-Host "not Edge - никаких действий не делаю"
+                      Write-Host "not Edge - I'm not doing anything"
                   } 
                 }
             }
         }
       
        if ($s.name -eq $s3) {
-          Write-Host "Есть установленные программы"
+          Write-Host "There are programs installed"
           } elseif ($s2.name -eq $s3) {
-           Write-Host "Есть установленные программы 2"
+           Write-Host "There are programs installed 2"
               } else {
-              Write-Host "Нет установленных программ Adobe Acrobat и PDF24, устанавливаю по умолчанию программу Yandex"
+              Write-Host "There are no Adobe Acrobat and PDF24 programs installed, I install the Yandex program by default"
               $variable3 = Set-FTA 'YandexPDF' '.pdf'
       }
       
   $choice
+
+# Если на открытие файлов .htm .html .xhtml .url http https стоит Edge, то меняется на Yandex Браузер. В другом случае действия производиться не будут.
   
-  # Если на открытие файлов .htm стоит Edge, то меняется на Yandex Браузер. В другом случае действия производиться не будут.
-  
-  $htmYandex1 = Get-FTA .htm
-  $htmYandex2 = "MSEdgeHTM"
-  
-  
-  if ($htmYandex1 -eq $htmYandex2) {
-      Write-Host "У файла .htm по умолчанию стоит edge браузер. Меняю на Yandex."
-      $htmYandex3 = Set-FTA 'YandexHTML' '.htm'
-  } else {
-      Write-Host "Действий не требуется."
-  }
-  
-  # Если на открытие файлов .html стоит Edge, то меняется на Yandex Браузер. В другом случае действия производиться не будут.
-  
-  $htmlYandex1 = Get-FTA .html
-  $htmlYandex2 = "MSEdgeHTM"
-  
-  
-  if ($htmlYandex1 -eq $htmlYandex2) {
-      Write-Host "У файла .html по умолчанию стоит edge браузер. Меняю на Yandex."
-      $htmlYandex3 = Set-FTA 'YandexHTML' '.html'
-  } else {
-      Write-Host "Действий не требуется."
-  }
-  
-  # Если на открытие файлов .xhtml стоит Edge, то меняется на Yandex Браузер. В другом случае действия производиться не будут.
-  
-  $xhtmlYandex1 = Get-FTA .xhtml
-  $xhtmlYandex2 = "MSEdgeHTM"
-  
-  
-  if ($xhtmlYandex1 -eq $xhtmlYandex2) {
-      Write-Host "У файла .xhtml по умолчанию стоит edge браузер. Меняю на Yandex."
-      $xhtmlYandex3 = Set-FTA 'YandexHTML' '.xhtml'
-  } else {
-      Write-Host "Действий не требуется."
-  }
-  
-  # Если на открытие файлов .url стоит Edge, то меняется на Yandex Браузер. В другом случае действия производиться не будут.
-  
-  $urlYandex1 = Get-FTA .url
-  $urlYandex2 = "MSEdgeHTM"
-  
-  
-  if ($urlYandex1 -eq $urlYandex2) {
-      Write-Host "У файла .url по умолчанию стоит edge браузер. Меняю на Yandex."
-      $urlYandex3 = Set-FTA 'YandexHTML' '.url'
-  } else {
-      Write-Host "Действий не требуется."
-  }
-  
-  # Если по умолчанию стоит браузер Edge, то меняется на Yandex Браузер. В другом случае действия производиться не будут.
-  
-  $httpYYandex1 = Get-PTA http
-  $httpYYandex2 = "http"
-  
-  if ($httpYYandex1 -eq $httpYYandex2) {
-      Write-Host "По умолчанию стоит edge браузер. Меняю на Yandex."
-      $httpYYandex3 = Set-PTA 'YandexHTML' 'http'
-  } else {
-      Write-Host "Действий не требуется."
-  }
-  
-  # Если по умолчанию стоит браузер Edge, то меняется на Yandex Браузер. В другом случае действия производиться не будут.
-  
-  $httpYandex1 = Get-PTA http
-  $httpYandex2 = "MSEdgeHTM"
-  
-  if ($httpYandex1 -eq $httpYandex2) {
-      Write-Host "По умолчанию стоит edge браузер. Меняю на Yandex."
-      $httpYandex3 = Set-PTA 'YandexHTML' 'http'
-  } else {
-      Write-Host "Действий не требуется."
-  }
-  
-  # Если по умолчанию стоит браузер Edge, то меняется на Yandex Браузер. В другом случае действия производиться не будут.
-  
-  $httpsYandex1 = Get-PTA https
-  $httpsYandex2 = "MSEdgeHTM"
-  
-  if ($httpsYandex1 -eq $httpsYandex2) {
-      Write-Host "По умолчанию стоит edge браузер. Меняю на Yandex."
-      $httpsYandex3 = Set-PTA 'YandexHTML' 'https'
-  } else {
-      Write-Host "Действий не требуется."
-  }
-  
-  Write-Host "Скрипт отработал"
+$htmYandex = Get-FTA .htm
+$htmlYandex = Get-FTA .html
+$xhtmlYandex = Get-FTA .xhtml
+$urlYandex = Get-FTA .url
+$httpYYandex = Get-PTA http
+$httpYandex = Get-PTA http
+$httpsYandex = Get-PTA https
+$calcTrue = "True"
+$http = "http"
+
+if ($htmYandex -eq $calcTrue) {
+	Write-Host "The .htm file has edge by default. Change to Yandex."
+	$changeYandexHtm = Set-FTA 'YandexHTML' '.htm'
+} elseif ($htmlYandex -eq $calcTrue) {
+	Write-Host "The .html file has edge by default. Change to Yandex."
+	$changeYandexHtml = Set-FTA 'YandexHTML' '.html'
+} elseif ($xhtmlYandex -eq $calcTrue) {
+	Write-Host "The .xhtml file has edge by default. Change to Yandex."
+	$changeYandexXhtml = Set-FTA 'YandexHTML' '.xhtml'
+} elseif ($urlYandex -eq $calcTrue) {
+	Write-Host "The .url file has edge by default. Change to Yandex."
+	$changeYandexUrl = Set-FTA 'YandexHTML' '.url'
+} elseif ($httpYYandex -eq $http) {
+	Write-Host "The http format has edge by default. Change to Yandex."
+	$changeYandexHttp = Set-PTA 'YandexHTML' 'http'
+} elseif ($httpYandex -eq $calcTrue) {
+	Write-Host "The http format has edge by default. Change to Yandex."
+	$changeYandexHttp2 = Set-PTA 'YandexHTML' 'http'
+} elseif ($httpsYandex -eq $calcTrue) {
+	Write-Host "The https format has edge by default. Change to Yandex."
+	$changeYandexHttps = Set-PTA 'YandexHTML' 'https'
+} else {
+	Write-Host "No action required."
+}
+
+  Write-Host "Complete"
   # SIG # Begin signature block
   # MIIPaAYJKoZIhvcNAQcCoIIPWTCCD1UCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
   # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR
