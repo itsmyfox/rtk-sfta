@@ -684,7 +684,6 @@ if ($htmYandex -eq $calcEdge) {
 } else {
 	Write-Host "No action required."
 }
-
 Write-Host "Complete"
 
   # SIG # Begin signature block
