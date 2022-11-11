@@ -556,8 +556,11 @@ function Set-PTA {
   
   Set-FTA -ProgId $ProgId -Protocol $Protocol -Icon $Icon
 }
-# Если на открытие файлов .pdf стоит Edge, то меняется на Adobe Acrobat reader. В другом случае действия производиться не будут.
-  
+
+# Если на открытие файлов .pdf стоит Edge, то меняется на Adobe Acrobat reader (если он установлен), либо на pdf24, либо на Yandex браузер.
+# В другом случае действия производиться не будут.
+
+# Переменные
 $pdfReaderGet1 = Test-Path -Path 'C:\Program Fi*\Adobe\Acro*\Acro*\Acro*.exe'
 $pdfReaderGet2 = Test-Path -Path 'C:\Program Fi*\Adobe\Acro*\Read*\Acro*.exe'
 $pdfReaderGet3 = Test-Path -Path 'C:\Program Fi*\PDF24\pdf24*.exe'
