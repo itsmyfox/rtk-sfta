@@ -582,7 +582,7 @@ $httpsYandex = Get-PTA https
 $calcEdge = "MSEdgeHTM"
 $http = "http"
   
-For (($i = 0); $i -lt 1; $i++) {
+For (($i = 0); $i -lt 2; $i++) {
   function Analyze( $p, $f) {
     Get-ItemProperty $p | ForEach-Object {
       if ($_.DisplayName -like "*Adobe acrobat*") {
