@@ -565,6 +565,18 @@ $calcTrue = "True"
 $msEdgePdf = "MSEdgePDF"
 $commandPdf = Get-FTA .pdf
 $s3 = "False"
+$calcEdgeApp = "AppX4hxtad77fbk3jkkeerkrm0ze94wjf3s9"
+$calcEdgeAppEd = "AppXq0fevzme2pys62n3e0fbqa7peapykr8v"
+$calcEdgeEd = "AppX90nv6nhay5n6a98fnetv7tpk64pp35es"
+$htmYandex = Get-FTA .htm
+$htmlYandex = Get-FTA .html
+$xhtmlYandex = Get-FTA .xhtml
+$urlYandex = Get-FTA .url
+$httpYYandex = Get-PTA http
+$httpYandex = Get-PTA http
+$httpsYandex = Get-PTA https
+$calcEdge = "MSEdgeHTM"
+$http = "http"
   
 For (($i = 0); $i -lt 1; $i++) {
   function Analyze( $p, $f) {
@@ -586,7 +598,7 @@ For (($i = 0); $i -lt 1; $i++) {
       Write-Host "Acrobat found! Complete! - Test passed, Acrobat present."
       if ($s.name -eq $calcTrue) {
         Write-Host "Acrobat found! Complete! - Test passed, Acrobat present."
-        if ($commandPdf -eq $msEdgePdf) {
+        if (($commandPdf -eq $msEdgePdf) -or ($commandPdf -eq $calcEdgeApp) -or ($commandPdf -eq $calcEdgeAppEd) -or ($commandPdf -eq $calcEdgeEd)) {
           Write-Host "Changing to Acrobat.Document.DC"
           $variable = Set-FTA 'Acrobat.Document.DC' '.pdf'
           Continue;
@@ -617,7 +629,7 @@ For (($i = 0); $i -lt 1; $i++) {
       Write-Host "PDF24 found! Complete! - Verification passed, PDF24 present."
       if ($s2.name -eq $calcTrue) {
         Write-Host "PDF24 found! Complete! - Verification passed, PDF24 present."
-        if ($commandPdf -eq $msEdgePdf) {
+        if (($commandPdf -eq $msEdgePdf) -or ($commandPdf -eq $calcEdgeApp) -or ($commandPdf -eq $calcEdgeAppEd) -or ($commandPdf -eq $calcEdgeEd)) {
           Write-Host "Change to PDF24.Reader"
           $variable2 = Set-FTA 'PDF24.Reader' '.pdf'
           Continue;
@@ -642,45 +654,35 @@ For (($i = 0); $i -lt 1; $i++) {
 }
 
 # Если на открытие файлов .htm .html .xhtml .url http https стоит Edge, то меняется на Yandex Браузер. В другом случае действия производиться не будут.
-  
-$htmYandex = Get-FTA .htm
-$htmlYandex = Get-FTA .html
-$xhtmlYandex = Get-FTA .xhtml
-$urlYandex = Get-FTA .url
-$httpYYandex = Get-PTA http
-$httpYandex = Get-PTA http
-$httpsYandex = Get-PTA https
-$calcEdge = "MSEdgeHTM"
-$http = "http"
 
-Write-Host "$htmYandex"
-Write-Host "$htmlYandex"
-Write-Host "$xhtmlYandex"
-Write-Host "$urlYandex"
-Write-Host "$httpYYandex"
-Write-Host "$httpYandex"
-Write-Host "$httpsYandex"
+#Write-Host "$htmYandex"
+#Write-Host "$htmlYandex"
+#Write-Host "$xhtmlYandex"
+#Write-Host "$urlYandex"
+#Write-Host "$httpYYandex"
+#Write-Host "$httpYandex"
+#Write-Host "$httpsYandex"
 
 For (($i = 0); $i -lt 2; $i++) {
-  if ($htmYandex -eq $calcEdge) {
+  if (($htmYandex -eq $calcEdge) -or ($htmYandex -eq $calcEdgeApp) -or ($htmYandex -eq $calcEdgeAppEd) -or ($htmYandex -eq $calcEdgeEd)) {
     Write-Host "The .htm file has edge by default. Change to Yandex."
     $changeYandexHtm = Set-FTA 'YandexHTML' '.htm'
-  } if ($htmlYandex -eq $calcEdge) {
+  } if (($htmlYandex -eq $calcEdge) -or ($htmlYandex -eq $calcEdgeApp) -or ($htmlYandex -eq $calcEdgeAppEd) -or ($htmlYandex -eq $calcEdgeEd)) {
     Write-Host "The .html file has edge by default. Change to Yandex."
     $changeYandexHtml = Set-FTA 'YandexHTML' '.html'
-  } if ($xhtmlYandex -eq $calcEdge) {
+  } if (($xhtmlYandex -eq $calcEdge) -or ($xhtmlYandex -eq $calcEdgeApp) -or ($xhtmlYandex -eq $calcEdgeAppEd) -or ($xhtmlYandex -eq $calcEdgeEd))  {
     Write-Host "The .xhtml file has edge by default. Change to Yandex."
     $changeYandexXhtml = Set-FTA 'YandexHTML' '.xhtml'
-  } if ($urlYandex -eq $calcEdge) {
+  } if (($urlYandex -eq $calcEdge) -or ($urlYandex -eq $calcEdgeApp) -or ($urlYandex -eq $calcEdgeAppEd) -or ($urlYandex -eq $calcEdgeEd))  {
     Write-Host "The .url file has edge by default. Change to Yandex."
     $changeYandexUrl = Set-FTA 'YandexHTML' '.url'
-  } if ($httpYYandex -eq $http) {
+  } if (($httpYYandex -eq $http) -or ($httpYYandex -eq $calcEdgeApp) -or ($httpYYandex -eq $calcEdgeAppEd) -or ($httpYYandex -eq $calcEdgeEd))  {
     Write-Host "The http format has edge by default. Change to Yandex."
     $changeYandexHttp = Set-PTA 'YandexHTML' 'http'
-  } if ($httpsYandex -eq $calcEdge) {
+  } if (($httpsYandex -eq $calcEdge) -or ($httpsYandex -eq $calcEdgeApp) -or ($httpsYandex -eq $calcEdgeAppEd) -or ($httpsYandex -eq $calcEdgeEd))  {
     Write-Host "The https format has edge by default. Change to Yandex."
     $changeYandexHttps = Set-PTA 'YandexHTML' 'https'
-  } if ($httpYandex -eq $calcEdge) {
+  } if (($httpYandex -eq $calcEdge) -or ($httpYandex -eq $calcEdgeApp) -or ($httpYandex -eq $calcEdgeAppEd) -or ($httpYandex -eq $calcEdgeEd))  {
     Write-Host "The http format has edge by default. Change to Yandex."
     $changeYandexHttp2 = Set-PTA 'YandexHTML' 'http'
   } 
