@@ -581,6 +581,21 @@ $httpYandex = Get-PTA http
 $httpsYandex = Get-PTA https
 $calcEdge = "MSEdgeHTM"
 $http = "http"
+$Date = Get-Date -Format "dd_MM_yyyy-HH_mm"
+$DateInfo = Get-Date -Format "dd.MM.yyyy HH:mm"
+
+# Логирование скрипта
+Start-Transcript -Append $env:SystemDrive\temp\Logs\rtk_sfta_"$date".txt
+
+Write-Host "До отработки скрипта:"
+Write-Host "Формат .pdf - $commandPdf"
+Write-Host "Формат .htm - $htmYandex"
+Write-Host "Формат .html - $htmlYandex"
+Write-Host "Формат .xhtml - $xhtmlYandex"
+Write-Host "Формат .url - $urlYandex"
+Write-Host "Формат .http - $httpYYandex"
+Write-Host "Формат .http - $httpYandex"
+Write-Host "Формат .https - $httpsYandex"
   
 For (($i = 0); $i -lt 2; $i++) {
   function Analyze( $p, $f) {
@@ -659,14 +674,6 @@ For (($i = 0); $i -lt 2; $i++) {
 
 # Если на открытие файлов .htm .html .xhtml .url http https стоит Edge, то меняется на Yandex Браузер. В другом случае действия производиться не будут.
 
-#Write-Host "$htmYandex"
-#Write-Host "$htmlYandex"
-#Write-Host "$xhtmlYandex"
-#Write-Host "$urlYandex"
-#Write-Host "$httpYYandex"
-#Write-Host "$httpYandex"
-#Write-Host "$httpsYandex"
-
 For (($i = 0); $i -lt 2; $i++) {
   if (($htmYandex -eq $calcEdge) -or ($htmYandex -eq $calcEdgePdf) -or ($htmYandex -eq $calcEdgeApp) -or ($htmYandex -eq $calcEdgeAppEd) -or ($htmYandex -eq $calcEdgeEd)) {
     Write-Host "The .htm file has edge by default. Change to Yandex."
@@ -691,6 +698,33 @@ For (($i = 0); $i -lt 2; $i++) {
     $changeYandexHttp2 = Set-PTA 'YandexHTML' 'http'
   } 
 }
+
+
+$commandPdf = Get-FTA .pdf
+$htmYandex = Get-FTA .htm
+$htmlYandex = Get-FTA .html
+$xhtmlYandex = Get-FTA .xhtml
+$urlYandex = Get-FTA .url
+$httpYYandex = Get-PTA http
+$httpYandex = Get-PTA http
+$httpsYandex = Get-PTA https
+
+Write-Host "После отработки скрипта:"
+Write-Host "Формат .pdf - $commandPdf"
+Write-Host "Формат .htm - $htmYandex"
+Write-Host "Формат .html - $htmlYandex"
+Write-Host "Формат .xhtml - $xhtmlYandex"
+Write-Host "Формат .url - $urlYandex"
+Write-Host "Формат .http - $httpYYandex"
+Write-Host "Формат .http - $httpYandex"
+Write-Host "Формат .https - $httpsYandex"
+
+# Отправка информации на шару для анализа отработки скрипта.
+net use i: \\10.0.114.35\techsupport\Logs\rtk_sfta /persistent:no
+pushd \\10.0.114.35\techsupport\Logs\rtk_sfta
+mkdir $env:computername
+copy "C:\temp\Logs\*" "i:\$env:computername\"
+net use i: /delete
 
 Write-Host "Complete"
 
