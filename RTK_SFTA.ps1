@@ -585,7 +585,11 @@ $Date = Get-Date -Format "dd_MM_yyyy-HH_mm"
 $DateInfo = Get-Date -Format "dd.MM.yyyy HH:mm"
 
 # Логирование скрипта
-Start-Transcript -Append $env:SystemDrive\temp\Logs\rtk_sfta_"$date".txt
+
+pushd \\10.0.114.35\techsupport\Logs\rtk_sfta
+mkdir $env:computername
+$cname = $env:computername
+Start-Transcript -Append $env:SystemDrive\temp\Logs\rtk_sfta_"$cname"_"$date".txt
 
 Write-Host "До отработки скрипта:"
 Write-Host "Формат .pdf - $commandPdf"
@@ -719,12 +723,15 @@ Write-Host "Формат .http - $httpYYandex"
 Write-Host "Формат .http - $httpYandex"
 Write-Host "Формат .https - $httpsYandex"
 
-# Отправка информации на шару для анализа отработки скрипта.
-net use i: \\10.0.114.35\techsupport\Logs\rtk_sfta /persistent:no
-pushd \\10.0.114.35\techsupport\Logs\rtk_sfta
-mkdir $env:computername
-copy "C:\temp\Logs\*" "i:\$env:computername\"
 net use i: /delete
+copy "$env:SystemDrive\temp\Logs\*" "\\10.0.114.35\techsupport\Logs\rtk_sfta\$cname\"
+
+# Отправка информации на шару для анализа отработки скрипта.
+#net use i: \\10.0.114.35\techsupport\Logs\rtk_sfta /persistent:no
+#pushd \\10.0.114.35\techsupport\Logs\rtk_sfta
+#mkdir $env:computername
+#copy "C:\temp\Logs\*" "i:\$env:computername\"
+#net use i: /delete
 
 Write-Host "Complete"
 
